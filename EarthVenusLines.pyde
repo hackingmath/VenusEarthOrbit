@@ -19,6 +19,16 @@ class Planet:
         self.x = self.r*cos(self.freq*t)
         self.y = self.r*sin(self.freq*t)
         ellipse(self.x,self.y,20,20)
+        
+class Line:
+    def __init__(self,beginning,ending):
+        self.ax = beginning.x
+        self.ay = beginning.y
+        self.bx = ending.x
+        self.by = ending.y
+        
+    def update(self):
+        line(self.ax,self.ay,self.bx,self.by)
 
 def setup():
     size(600,600)
@@ -30,6 +40,9 @@ dt = 0.05
 #create planets
 venus = Planet(100,1.5,color(255,0,255))
 earth = Planet(250,1,color(0,0,255))
+
+#line list
+lineList = []
     
 def draw():
     global t,dt,venus,earth
@@ -41,7 +54,9 @@ def draw():
     #update planets
     venus.update()
     earth.update()
+    lineList.append(Line(venus,earth))
     strokeWeight(1)
     stroke(255)
-    line(earth.x,earth.y,venus.x,venus.y)
+    for n in lineList:
+        n.update()
     t += dt
