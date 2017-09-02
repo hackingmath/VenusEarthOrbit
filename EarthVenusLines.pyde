@@ -41,12 +41,19 @@ dt = 0.05
 venus = Planet(100,1.5,color(255,0,255))
 earth = Planet(250,1,color(0,0,255))
 
+#create stars
+starList = []
+for i in range(10):
+  starList.append(Star())
+
 #line list
 lineList = []
     
 def draw():
-    global t,dt,venus,earth
+    global starList,venus, t,dt
     background(0)
+    for star in starList:
+        star.update()
     translate(width/2,height/2)
     #sun
     fill(255,255,0)#yellow
