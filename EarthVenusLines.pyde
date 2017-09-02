@@ -3,6 +3,10 @@ Peter Farrell September 2, 2017'''
 
 from random import randint
 
+scl = 1.5
+erase = False
+pause = False
+
 class Star:
   def __init__(self):
     self.x = randint(0,600)
@@ -13,11 +17,11 @@ class Star:
     ellipse(self.x,
             self.y,
             5,5)
-    
+
 class Planet:
-    def __init__(self,r,freq,col):
+    def __init__(self,r,period,col):
         self.r = r
-        self.freq = freq
+        self.freq = TWO_PI/period
         self.col = col #color
         
     def update(self):
@@ -48,11 +52,11 @@ def setup():
     
 #time variables
 t = 0.0
-dt = 0.05
+dt = 0.01
 
 #create planets
-venus = Planet(100,1.5,color(255,0,255))
-earth = Planet(250,1,color(0,0,255))
+venus = Planet(108.2*scl,0.6152,color(255,0,255))
+earth = Planet(149.6*scl,1,color(0,0,255))
 
 #create stars
 starList = []
@@ -63,7 +67,7 @@ for i in range(10):
 lineList = []
     
 def draw():
-    global starList,venus, t,dt
+    global starList,venus, t,dt,lineList
     background(0)
     for star in starList:
         star.update()
@@ -77,6 +81,20 @@ def draw():
     lineList.append(Line(venus,earth))
     strokeWeight(1)
     stroke(255)
+    if erase:
+        lineList = [] #empty the line list
+    #draw all the lines (if there are any)
     for n in lineList:
         n.update()
-    t += dt
+    else:
+        line(venus.x,venus.y,earth.x,earth.y)
+    if not pause:
+        t += dt
+    
+def keyPressed():
+    global erase,pause
+    if key == 'e':
+        erase = not erase
+    if key == 'p':
+        pause = not pause
+        
