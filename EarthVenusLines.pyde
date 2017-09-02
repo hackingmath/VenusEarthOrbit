@@ -1,6 +1,17 @@
 '''The segments connecting Earth and Venus
 Peter Farrell September 2, 2017'''
 
+class Star:
+  def __init__(self):
+    self.x = randint(0,600)
+    self.y = randint(0,600)
+    
+  def update(self):
+    fill(255)
+    ellipse(self.x,
+            self.y,
+            5,5)
+    
 class Planet:
     def __init__(self,r,freq,col):
         self.r = r
