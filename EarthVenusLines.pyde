@@ -21,6 +21,7 @@ class Star:
 class Planet:
     def __init__(self,r,period,col):
         self.r = r
+        #convert the period into the frequency
         self.freq = TWO_PI/period
         self.col = col #color
         
@@ -55,6 +56,7 @@ t = 0.0
 dt = 0.01
 
 #create planets
+#yes, these are their real average radii and orbital periods!
 venus = Planet(108.2*scl,0.6152,color(255,0,255))
 earth = Planet(149.6*scl,1,color(0,0,255))
 
