@@ -13,6 +13,7 @@ class Star:
     self.y = randint(0,600)
     
   def update(self):
+    noStroke()
     fill(255)
     ellipse(self.x,
             self.y,
@@ -21,7 +22,6 @@ class Star:
 class Planet:
     def __init__(self,r,period,col):
         self.r = r
-        #convert the period into the frequency
         self.freq = TWO_PI/period
         self.col = col #color
         
@@ -44,19 +44,21 @@ class Line:
         self.ay = beginning.y
         self.bx = ending.x
         self.by = ending.y
+        self.col = color((200*t)%360,360,360)
         
     def update(self):
+        stroke(self.col)
         line(self.ax,self.ay,self.bx,self.by)
 
 def setup():
     size(600,600)
+    colorMode(HSB)
     
 #time variables
 t = 0.0
 dt = 0.01
 
 #create planets
-#yes, these are their real average radii and orbital periods!
 venus = Planet(108.2*scl,0.6152,color(255,0,255))
 earth = Planet(149.6*scl,1,color(0,0,255))
 
@@ -75,12 +77,15 @@ def draw():
         star.update()
     translate(width/2,height/2)
     #sun
-    fill(255,255,0)#yellow
+    noStroke()
+    fill(30, 300, 300)#orange
     ellipse(0,0,50,50)
     #update planets
     venus.update()
     earth.update()
     lineList.append(Line(venus,earth))
+    if len(lineList) >= 1000:
+        lineList.remove(lineList[0])
     strokeWeight(1)
     stroke(255)
     if erase:
